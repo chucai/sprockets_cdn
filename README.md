@@ -1,8 +1,6 @@
 # SprocketsCdn
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sprockets_cdn`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+** A Sprockets CDN extendsion gem, upload assets to  upyun/qiniu. **
 
 ## Installation
 
@@ -21,21 +19,32 @@ Or install it yourself as:
     $ gem install sprockets_cdn
 
 ## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+# config/initializes/sprockets_cdn.rb
+SprocketsCDN.config do |config|
+  config.bucket = "bucket name"
+  config.asset_host = "asset host"
+  ## for qiniu
+  config.adapter = 'qiniu'
+  config.access_key = "xxxx"
+  config.secret_key = "xxxx"
+  ## for upyun
+  config.adapter = 'upyun'
+  config.access_key = "as username"
+  config.secret_key = "as password"
+end
+```
+then
+```bash
+## run compile assets,it will upload to cdn after compile
+RAILS_ENV=production bundle exec rake assets:precompile
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sprockets_cdn. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/arnkorty/sprockets_cdn. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

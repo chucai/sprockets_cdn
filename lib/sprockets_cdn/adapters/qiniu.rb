@@ -3,16 +3,11 @@ require 'hmac-sha1'
 require 'restclient'
 require 'base64'
 require 'json'
+require 'sprockets_cdn/adapters/base'
 module SprocketsCDN
   module Adapters
-    class Qiniu
-      attr_accessor :access_key, :secret_key
-      def initialize opt
-        @access_key = opt[:access_key]
-        @secret_key = opt[:secret_key]
-        @asset_host = opt[:asset_host]
-        @bucket     = opt[:bucket]
-      end
+    class Qiniu < Base
+
       def uploading file, opt
         put_policy = generate_put_policy file, opt
         uptoken = uptoken(put_policy)
@@ -25,14 +20,21 @@ module SprocketsCDN
 
         res = RestClient.post "http://up.qiniu.com/", post_data
         target = JSON.parse(res)['key']
-        URI.join(@asset_host, target).to_s
+        # URI.join(@asset_host, target).to_s
+        generate_remote_url target
       end
 
       def generate_put_policy file, opt
-        opt[:saveKey] = file.sub(opt[:dir].to_s, '')
+        opt[:saveKey] = get_key file, opt[:dir] #file.sub(opt[:dir].to_s, '')
         opt[:scope] = @bucket
         opt[:deadline] = Time.now.to_i + 3600
         opt
+      end
+
+      def get_key file, dir
+        path = super file, dir
+        path = path[1..-1] if path =~ /^\//
+        path
       end
 
       def uptoken put_policy
@@ -42,10 +44,6 @@ module SprocketsCDN
         encoded_sign = urlsafe_base64_encode sign
 
         uptoken = "#{@access_key}:#{encoded_sign}:#{encoded_put_policy}"
-      end
-
-      def urlsafe_base64_encode content
-        Base64.encode64(content).strip.gsub('+', '-').gsub('/','_').gsub(/\r?\n/, '')
       end
     end
   end

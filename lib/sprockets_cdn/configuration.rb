@@ -1,17 +1,12 @@
+require 'active_support/configurable'
 module SprocketsCDN
-  class Configuration
-    cattr_accessor :adapter, :bucket, :access_key, :secret_key, :asset_host
-
+  class Configuration < ::ActiveSupport::Configurable::Configuration
+    # attr_accessor :adapter, :bucket, :access_key, :secret_key, :asset_host
     def self.checked?
-      @@adapter && @@bucket && @@access_key && @@secret_key && @@asset_host
+      config.adapter && config.bucket && config.access_key && config.secret_key && config.asset_host
     end
     def self.config
-      {
-        bucket: @@bucket,
-        access_key: @@access_key,
-        secret_key: @@secret_key,
-        asset_host: @@asset_host
-      }
+      @@config ||= ActiveSupport::Configurable::Configuration.new
     end
   end
 end
