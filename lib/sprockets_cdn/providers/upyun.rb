@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 require 'restclient'
 require 'digest/md5'
-require 'sprockets_cdn/adapters/base'
+require 'sprockets_cdn/providers/base'
 module SprocketsCDN
-  module Adapters
+  module Providers
     class Upyun < Base
       attr_accessor :username, :password
       def initialize opt

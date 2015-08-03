@@ -12,7 +12,7 @@ class TestManifest < SprocketsCDN::TestCase
     @asset_host = Spro
     FileUtils.mkdir_p(@dir)
     SprocketsCDN.config do |config|
-      config.adapter = 'qiniu'
+      config.prodiver = 'qiniu'
       # config.access_key = "xx"
       # config.secret_key = "xxx"
       config.bucket = "sprockets"

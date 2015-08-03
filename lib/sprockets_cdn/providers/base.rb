@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'base64'
 module SprocketsCDN
-  module Adapters
+  module Providers
     class Base
       attr_accessor :access_key, :secret_key
       def initialize opt

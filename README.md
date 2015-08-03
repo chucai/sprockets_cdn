@@ -1,6 +1,7 @@
 # SprocketsCdn
 
-** A Sprockets CDN extendsion gem, upload assets to  upyun/qiniu. **
+#### A Sprockets CDN extendsion gem, upload assets to  upyun/qiniu.
+
 
 ## Installation
 
@@ -25,11 +26,11 @@ SprocketsCDN.config do |config|
   config.bucket = "bucket name"
   config.asset_host = "asset host"
   ## for qiniu
-  config.adapter = 'qiniu'
+  config.provider = 'qiniu'
   config.access_key = "xxxx"
   config.secret_key = "xxxx"
   ## for upyun
-  config.adapter = 'upyun'
+  config.provider = 'upyun'
   config.access_key = "as username"
   config.secret_key = "as password"
 end

@@ -5,8 +5,8 @@ module SprocketsCDN
     class << self
       def setup assets, dir, logger
         return unless SprocketsCDN::Configuration.checked?
-        require "sprockets_cdn/adapters/#{SprocketsCDN::Configuration.config.adapter}"
-        kclass = SprocketsCDN::Adapters.const_get SprocketsCDN::Configuration.config.adapter.classify
+        require "sprockets_cdn/providers/#{SprocketsCDN::Configuration.config.provider}"
+        kclass = SprocketsCDN::Providers.const_get SprocketsCDN::Configuration.config.provider.classify
         client = kclass.new SprocketsCDN::Configuration.config
         remote_data = {}
         assets.each do |key, asset|

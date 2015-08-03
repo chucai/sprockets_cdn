@@ -3,9 +3,9 @@ require 'hmac-sha1'
 require 'restclient'
 require 'base64'
 require 'json'
-require 'sprockets_cdn/adapters/base'
+require 'sprockets_cdn/providers/base'
 module SprocketsCDN
-  module Adapters
+  module Providers
     class Qiniu < Base
 
       def uploading file, opt
